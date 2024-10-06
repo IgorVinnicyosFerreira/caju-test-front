@@ -1,4 +1,5 @@
-import { IAPIDefinnitions } from "../types/api";
+import { Admission } from '~/types/admission';
+import { IAPIDefinnitions } from "~/types/api";
 
 type ListAdmissionsParams = {
   filters?: {
@@ -13,7 +14,7 @@ class AdmissionsService {
     this.api = api;
   }
 
-  async listAdmissions({ filters }: ListAdmissionsParams = {}) {
+  async listAdmissions({ filters }: ListAdmissionsParams = {}): Promise<Admission[]> {
     let url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations`;
 
     if (filters?.cpf) {
@@ -21,7 +22,7 @@ class AdmissionsService {
     }
 
     const response = await this.api.get(url);
-    const data = await response.json();
+    const data = await response.json() as Admission[];
 
     return data;
   }
