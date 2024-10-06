@@ -15,7 +15,7 @@ const NewUserPage = () => {
   return (
     <S.Container>
       <S.Card>
-        <IconButton onClick={() => goToHome()} aria-label="back">
+        <IconButton onClick={() => goToHome()} outlined aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
         <TextField placeholder="Nome" label="Nome" />
