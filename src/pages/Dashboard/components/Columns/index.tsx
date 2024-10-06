@@ -1,41 +1,46 @@
-
-import * as S from "./styles";
+import * as Styled from "./styles";
 import RegistrationCard from "../RegistrationCard";
+import SkeletonLoader from "./SkeletonLoader";
 
 const allColumns = [
-  { status: 'REVIEW', title: "Pronto para revisar" },
-  { status: 'APPROVED', title: "Aprovado" },
-  { status: 'REPROVED', title: "Reprovado" },
+  { status: "REVIEW", title: "Pronto para revisar" },
+  { status: "APPROVED", title: "Aprovado" },
+  { status: "REPROVED", title: "Reprovado" },
 ];
 
 type Props = {
   registrations?: any[];
+  isLoading?: boolean;
 };
-const Collumns = (props: Props) => {
+const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
   return (
-    <S.Container>
+    <Styled.Container>
       {allColumns.map((collum) => {
         return (
-          <S.Column status={collum.status} key={collum.title}>
+          <Styled.Column status={collum.status} key={collum.title}>
             <>
-              <S.TitleColumn status={collum.status}>
+              <Styled.TitleColumn status={collum.status}>
                 {collum.title}
-              </S.TitleColumn>
-              <S.CollumContent>
-                {props?.registrations?.map((registration) => {
-                  return (
-                    <RegistrationCard
-                      data={registration}
-                      key={registration.id}
-                    />
-                  );
-                })}
-              </S.CollumContent>
+              </Styled.TitleColumn>
+              <Styled.CollumContent>
+                {isLoading ? (
+                  <SkeletonLoader />
+                ) : (
+                  registrations?.map((registration) => {
+                    return (
+                      <RegistrationCard
+                        data={registration}
+                        key={registration.id}
+                      />
+                    );
+                  })
+                )}
+              </Styled.CollumContent>
             </>
-          </S.Column>
+          </Styled.Column>
         );
       })}
-    </S.Container>
+    </Styled.Container>
   );
 };
 export default Collumns;

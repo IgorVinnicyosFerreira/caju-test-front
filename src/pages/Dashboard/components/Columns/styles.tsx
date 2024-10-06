@@ -34,7 +34,6 @@ export const Column = styled.div<{ status: any }>`
 `;
 
 export const TitleColumn = styled.h3<{ status: any }>`
-  margin: 0px;
   color: ${({ status }) => registrationStatusStyles[status].title};
   margin: 24px;
 `;
