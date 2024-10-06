@@ -1,16 +1,17 @@
 import styled from "styled-components";
+import AdmissionStatus from '~/constants/admissionStatus';
 const registrationStatusStyles: {
   [key in string]: { background: string; title: string };
 } = {
-  REVIEW: {
+  [AdmissionStatus.REVIEW]: {
     background: "#FDF8E9",
     title: "#EFC24D",
   },
-  APPROVED: {
+  [AdmissionStatus.APPROVED]: {
     background: "#EEEEFD",
     title: "#4242DF",
   },
-  REPROVED: {
+  [AdmissionStatus.REPROVED]: {
     background: "#FBEDF6",
     title: "#CE2893",
   },
@@ -34,7 +35,6 @@ export const Column = styled.div<{ status: any }>`
 `;
 
 export const TitleColumn = styled.h3<{ status: any }>`
-  margin: 0px;
   color: ${({ status }) => registrationStatusStyles[status].title};
   margin: 24px;
 `;
