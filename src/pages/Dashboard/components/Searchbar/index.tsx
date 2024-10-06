@@ -12,9 +12,10 @@ import { maskCPF } from '~/utils/masks';
 
 type Props = {
   onCPFSearch?: (cpf: string) => void;
+  onRefreshClick?: () => void;
 }
 
-export const SearchBar: React.FC<Props> = ({ onCPFSearch }) => {
+export const SearchBar: React.FC<Props> = ({ onCPFSearch, onRefreshClick }) => {
   const history = useHistory();
   const [cpfInput, setCpfInput] = useState<string>('');
   const [cpfErrorMessage, setCpfErrorMessage] = useState<string>('');
@@ -48,12 +49,16 @@ export const SearchBar: React.FC<Props> = ({ onCPFSearch }) => {
       onCPFSearch && onCPFSearch('');
     }
   }
+
+  const handleRefresh = () => {
+    onRefreshClick && onRefreshClick();
+  }
   
   return (
     <Styled.Container>
       <TextField value={cpfInput} maxLength={14}  placeholder="Digite um CPF válido" onChange={handleOnChangeCPF} error={cpfErrorMessage}/>
       <Styled.Actions>
-        <IconButton aria-label="refetch">
+        <IconButton aria-label="refetch" onClick={handleRefresh}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>

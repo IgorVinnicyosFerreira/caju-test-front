@@ -10,7 +10,7 @@ const DashboardPage = () => {
 
   const admissionsService = AdmissionsServiceFactory.make();
 
-  const {data: admissions } = useQuery({
+  const {data: admissions, isLoading,  refetch } = useQuery({
     queryKey: ['registrations', cpf],
     queryFn: async () => {
       const admissions = await admissionsService.listAdmissions({
@@ -27,10 +27,14 @@ const DashboardPage = () => {
     setCpf(cpf)
   }
 
+  const handleRefresh = () => {
+    refetch();
+  }
+
   return (
     <Styled.Container>
-      <SearchBar onCPFSearch={handleOnCPFSearch} />
-      <Collumns registrations={admissions} />
+      <SearchBar onCPFSearch={handleOnCPFSearch} onRefreshClick={handleRefresh} />
+      <Collumns registrations={admissions} isLoading={isLoading}  />
     </Styled.Container>
   );
 };
