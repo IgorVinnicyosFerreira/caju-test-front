@@ -1,15 +1,8 @@
 import Dialog from "~/components/Dialog";
 import * as Styled from "./styles";
+import { ConfirmationDialogConfig } from '~/types/dialog';
 
-type Props = {
-  title: string;
-  description: string;
-  isOpen: boolean;
-  onClose: () => void;
-  onAccept: () => void;
-};
-
-const ConfirmationDialog: React.FC<Props> = ({
+const ConfirmationDialog: React.FC<ConfirmationDialogConfig> = ({
   title,
   description,
   isOpen,
