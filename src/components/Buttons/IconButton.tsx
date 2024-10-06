@@ -1,8 +1,15 @@
 import styled from "styled-components";
 
-export const _IconButtonStyled = styled.button`
+type IconButtonProps = {
+  children?: React.ReactNode;
+  color?: string;
+  outlined?: boolean;
+} & React.HTMLAttributes<HTMLButtonElement>;
+
+
+export const _IconButtonStyled = styled.button<IconButtonProps>`
   cursor: pointer;
-  border: 2px solid #64a98c;
+  border: ${props => props.outlined ? '2px solid #64a98c' : 'none'};
   width: fit-content;
   padding: 4px;
   border-radius: 24px;
@@ -11,13 +18,9 @@ export const _IconButtonStyled = styled.button`
   justify-content: center;
   background-color: transparent;
   svg {
-    color: #64a98c;
+    color: ${props => props.color ? props.color : '#64a98c'};
   }
 `;
-
-type IconButtonProps = {
-  children?: React.ReactNode;
-} & React.HTMLAttributes<HTMLButtonElement>;
 
 export const IconButton = (props: IconButtonProps) => {
   return (
