@@ -96,7 +96,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
       }, CPF ${maskCPF(admission.cpf)}, será excluída.`,
-      onAccept: () => {},
+      onAccept: () => handleDeleteAdimissionStatus(admission.id),
     });
   };
 
@@ -120,6 +120,20 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
     try {
       setConfirmationDialogConfig((prev) => ({ ...prev, isLoading: true }));
       await admissionsService.updateAdmissionStatus({ id, status });
+      await queryClient.invalidateQueries({
+        queryKey: [ADMISSIONS_CACHE_KEY]
+      })
+    } catch (error) {
+      
+    } finally {
+      closeConfirmationDialog();
+    }
+  }
+
+  const handleDeleteAdimissionStatus = async (id: string) => {
+    try {
+      setConfirmationDialogConfig((prev) => ({ ...prev, isLoading: true }));
+      await admissionsService.delete({ id });
       await queryClient.invalidateQueries({
         queryKey: [ADMISSIONS_CACHE_KEY]
       })
