@@ -17,6 +17,13 @@ type deleteAdmissionParams = {
   id: string;
 }
 
+type CreateAdmissionParams = {
+  name: string;
+  email: string;
+  cpf: string;
+  admissionDate: string;
+}
+
 class AdmissionsService {
   private api: IAPIDefinnitions;
 
@@ -35,6 +42,22 @@ class AdmissionsService {
     const data = await response.json() as Admission[];
 
     return data;
+  }
+
+  async create({ name, email, cpf, admissionDate }: CreateAdmissionParams): Promise<boolean> {
+    const url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations`;
+
+    const response = await this.api.post(url, {
+      body: JSON.stringify({
+        employeeName: name,
+        email,
+        cpf,
+        admissionDate,
+        status: AdmissionStatus.REVIEW
+      })
+    });
+
+    return response.status === 200;
   }
 
   async updateAdmissionStatus({ id, status }: UpdateAdmissionStatusParams): Promise<boolean> {
