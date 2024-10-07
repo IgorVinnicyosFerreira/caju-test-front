@@ -10,6 +10,8 @@ import { maskCPF } from "~/utils/masks";
 import AdmissionsServiceFactory from '~/factories/services/admissionsServiceFactory';
 import { useQueryClient } from '@tanstack/react-query';
 import { ADMISSIONS_CACHE_KEY } from '~/constants/cacheKeys';
+import { useSnackbar } from '~/contexts/snackbarContext';
+import SnackbarTypes from '~/constants/snackbarTypes';
 
 const allColumns = [
   { status: AdmissionStatus.REVIEW, title: "Pronto para revisar" },
@@ -32,6 +34,8 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       onClose: () => {},
       onAccept: () => {},
     });
+
+  const { showSnackbar } = useSnackbar();
 
   const approvedAdmissions = useMemo(
     () =>
@@ -122,9 +126,11 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       await admissionsService.updateAdmissionStatus({ id, status });
       await queryClient.invalidateQueries({
         queryKey: [ADMISSIONS_CACHE_KEY]
-      })
+      });
+
+      showSnackbar('Status da admissão atualizado com sucesso!', SnackbarTypes.SUCCESS);
     } catch (error) {
-      
+      showSnackbar('Falha ao atualizar status da adimissão, tente novamente!', SnackbarTypes.ERROR);
     } finally {
       closeConfirmationDialog();
     }
@@ -137,8 +143,9 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       await queryClient.invalidateQueries({
         queryKey: [ADMISSIONS_CACHE_KEY]
       })
+      showSnackbar('Admissão excluida com sucesso!', SnackbarTypes.SUCCESS);
     } catch (error) {
-      
+      showSnackbar('Falha ao excluir admissão, tente novamente!', SnackbarTypes.ERROR);
     } finally {
       closeConfirmationDialog();
     }
