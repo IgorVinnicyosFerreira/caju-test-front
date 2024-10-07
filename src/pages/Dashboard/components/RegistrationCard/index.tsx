@@ -28,6 +28,9 @@ const RegistrationCard: React.FC<Props> = ({
   onDeleteClick
 }) => {
   const isInReview = data.status === AdmissionStatus.REVIEW;
+  const admissionDate = new Date(data.admissionDate);
+  const formattedDate = admissionDate.toLocaleDateString('pt-BR');
+
   return (
     <Styled.Card>
       <Styled.IconAndText>
@@ -40,7 +43,7 @@ const RegistrationCard: React.FC<Props> = ({
       </Styled.IconAndText>
       <Styled.IconAndText>
         <HiOutlineCalendar />
-        <span>{data.admissionDate}</span>
+        <span>{formattedDate}</span>
       </Styled.IconAndText>
       <Styled.Actions>
         {isInReview ? (

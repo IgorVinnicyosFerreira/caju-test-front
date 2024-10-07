@@ -17,7 +17,7 @@ export const Card = styled.div`
   padding: 48px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
  
   ${_IconButtonStyled} {
     margin-bottom: 8px;
@@ -26,5 +26,12 @@ export const Card = styled.div`
 
   ${Button}{
     align-self: flex-end;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
   }
 `;
