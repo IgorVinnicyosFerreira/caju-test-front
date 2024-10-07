@@ -130,7 +130,6 @@ const NewUserPage = () => {
 
   const onSubmit = async () => {
     const isValidForm = validateFields();
-    console.log({isValidForm})
     if (!isValidForm) return;
 
     try {
