@@ -13,6 +13,10 @@ type UpdateAdmissionStatusParams = {
   id: string;
 }
 
+type deleteAdmissionParams = {
+  id: string;
+}
+
 class AdmissionsService {
   private api: IAPIDefinnitions;
 
@@ -43,6 +47,13 @@ class AdmissionsService {
         })
       }
     );
+
+    return response.status === 200;
+  }
+
+  async delete({ id }: deleteAdmissionParams): Promise<boolean> {
+    const url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
+    const response = await this.api.delete(url);
 
     return response.status === 200;
   }
