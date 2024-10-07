@@ -1,54 +1,36 @@
-import { IAPIDefinnitions } from "../types/api";
-import isString from "../utils/isString";
+import { IAPIDefinnitions, RequestConfig } from "../types/api";
 
 class APIFetch implements IAPIDefinnitions {
-  get(configOrUrl: Request | string) {
-    return fetch(configOrUrl);
+  get(url: string, config?: RequestConfig) {
+    return fetch(url, config);
   }
 
-  post(configOrUrl: Request | string) {
-    const isStringURL = isString(configOrUrl);
-
-    const requestConfig = (
-      isStringURL
-        ? {
-            method: "PUT",
-            url: configOrUrl,
-          }
-        : configOrUrl
-    ) as Request;
-
-    return fetch(requestConfig);
+  post(url: string, config?: RequestConfig) {
+    return fetch(url, {
+      method: 'POST',
+      ...(config ? config : {})
+    });
   }
 
-  put(configOrUrl: Request | string) {
-    const isStringURL = isString(configOrUrl);
-
-    const requestConfig = (
-      isStringURL
-        ? {
-            method: "PUT",
-            url: configOrUrl,
-          }
-        : configOrUrl
-    ) as Request;
-
-    return fetch(requestConfig);
+  patch(url: string, config?: RequestConfig) {
+    return fetch(url, {
+      method: 'PATCH',
+      ...(config ? config : {})
+    });
   }
 
-  delete(configOrUrl: Request | string) {
-    const isStringURL = isString(configOrUrl);
+  put(url: string, config?: RequestConfig) {
+    return fetch(url, {
+      method: 'PUT',
+      ...(config ? config : {})
+    });
+  }
 
-    const requestConfig = (
-      isStringURL
-        ? {
-            method: "DELETE",
-            url: configOrUrl,
-          }
-        : configOrUrl
-    ) as Request;
-
-    return fetch(requestConfig);
+  delete(url: string, config?: RequestConfig) {
+    return fetch(url, {
+      method: 'DELETE',
+      ...(config ? config : {})
+    });
   }
 }
 

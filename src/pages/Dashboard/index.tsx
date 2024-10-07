@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import Collumns from './components/Columns';
 import * as Styled from './styles';
 import { SearchBar } from './components/Searchbar';
-import AdmissionsServiceFactory from '../../factories/services/admissionsServiceFactory';
+import AdmissionsServiceFactory from '~/factories/services/admissionsServiceFactory';
+import { ADMISSIONS_CACHE_KEY } from '~/constants/cacheKeys';
 
 const DashboardPage = () => {
   const [cpf, setCpf] = useState<string>();
@@ -11,7 +12,7 @@ const DashboardPage = () => {
   const admissionsService = AdmissionsServiceFactory.make();
 
   const {data: admissions, isLoading,  refetch } = useQuery({
-    queryKey: ['registrations', cpf],
+    queryKey: [ADMISSIONS_CACHE_KEY, cpf],
     queryFn: async () => {
       const admissions = await admissionsService.listAdmissions({
         filters: {
@@ -34,7 +35,7 @@ const DashboardPage = () => {
   return (
     <Styled.Container>
       <SearchBar onCPFSearch={handleOnCPFSearch} onRefreshClick={handleRefresh} />
-      <Collumns registrations={admissions} isLoading={isLoading}  />
+      <Collumns registrations={admissions} isLoading={isLoading} />
     </Styled.Container>
   );
 };
