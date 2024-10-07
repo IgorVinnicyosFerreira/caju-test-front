@@ -25,6 +25,7 @@ export const Description = styled.p`
 `;
 
 export const ConfirmationButton = styled(Button)`
+  justify-content: center;
   height: 42px;
   border-radius: 22px;
   background: linear-gradient(258deg, rgba(255, 117, 0, 1) 8%, rgba(232, 5, 55, 1) 53%);

@@ -1,13 +1,15 @@
 import Dialog from "~/components/Dialog";
 import * as Styled from "./styles";
-import { ConfirmationDialogConfig } from '~/types/dialog';
+import { ConfirmationDialogConfig } from "~/types/dialog";
+import { SpinnerLoader } from "~/components/SpinnerLoader";
 
 const ConfirmationDialog: React.FC<ConfirmationDialogConfig> = ({
   title,
   description,
   isOpen,
+  isLoading,
   onClose,
-  onAccept
+  onAccept,
 }) => {
   return (
     <Dialog isOpen={isOpen}>
@@ -16,8 +18,10 @@ const ConfirmationDialog: React.FC<ConfirmationDialogConfig> = ({
         <Styled.Description id='dialog-description'>
           {description}
         </Styled.Description>
-        <Styled.DeclineButton onClick={onClose}>Cancelar</Styled.DeclineButton>
-        <Styled.ConfirmationButton onClick={onAccept}>Confirmar</Styled.ConfirmationButton>
+        <Styled.DeclineButton onClick={onClose} disabled={isLoading}>Cancelar</Styled.DeclineButton>
+        <Styled.ConfirmationButton onClick={onAccept} disabled={isLoading}>
+          {isLoading ? <SpinnerLoader /> : "Confirmar"}
+        </Styled.ConfirmationButton>
       </Styled.Content>
     </Dialog>
   );
