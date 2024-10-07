@@ -7,6 +7,9 @@ import { Admission } from "~/types/admission";
 import ConfirmationDialog from "../ConfirmationDialog";
 import { ConfirmationDialogConfig } from "~/types/dialog";
 import { maskCPF } from "~/utils/masks";
+import AdmissionsServiceFactory from '~/factories/services/admissionsServiceFactory';
+import { useQueryClient } from '@tanstack/react-query';
+import { ADMISSIONS_CACHE_KEY } from '~/constants/cacheKeys';
 
 const allColumns = [
   { status: AdmissionStatus.REVIEW, title: "Pronto para revisar" },
@@ -23,6 +26,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
   const [confirmationDialogConfig, setConfirmationDialogConfig] =
     useState<ConfirmationDialogConfig>({
       isOpen: false,
+      isLoading: false,
       title: "",
       description: "",
       onClose: () => {},
@@ -53,6 +57,10 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
     [registrations]
   );
 
+  const queryClient = useQueryClient();
+
+  const admissionsService = AdmissionsServiceFactory.make();
+
   const admissionsByStatus = {
     [AdmissionStatus.REVIEW]: reviewAdmissions,
     [AdmissionStatus.REPROVED]: reprovedAdmissions,
@@ -66,7 +74,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
       }, CPF ${maskCPF(admission.cpf)}, será reprovada.`,
-      onAccept: () => {},
+      onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.REPROVED),
     });
   };
 
@@ -77,7 +85,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
       }, CPF ${maskCPF(admission.cpf)}, será aprovada.`,
-      onAccept: () => {},
+      onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.APPROVED),
     });
   };
 
@@ -99,17 +107,34 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
       }, CPF ${maskCPF(admission.cpf)}, será movida para revisão.`,
-      onAccept: () => {},
+      onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.REVIEW),
     });
   };
+
+
+  const closeConfirmationDialog = () => {
+    setConfirmationDialogConfig((prev) => ({ ...prev, isOpen: false, isLoading: false }));
+  }
+
+  const handleOnChangeAdmissionStatus = async (id: string, status: AdmissionStatus) => {
+    try {
+      setConfirmationDialogConfig((prev) => ({ ...prev, isLoading: true }));
+      await admissionsService.updateAdmissionStatus({ id, status });
+      await queryClient.invalidateQueries({
+        queryKey: [ADMISSIONS_CACHE_KEY]
+      })
+    } catch (error) {
+      
+    } finally {
+      closeConfirmationDialog();
+    }
+  }
 
   return (
     <Styled.Container>
       <ConfirmationDialog
         {...confirmationDialogConfig}
-        onClose={() =>
-          setConfirmationDialogConfig((prev) => ({ ...prev, isOpen: false }))
-        }
+        onClose={closeConfirmationDialog}
       />
       {allColumns.map((collum) => {
         return (
