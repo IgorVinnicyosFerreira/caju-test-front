@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Dialog from '../Dialog';
+import Dialog from '../index';
 
 describe('Dialog', () => {
   it('should render Dialog with your children when isOpen is true', () => {
