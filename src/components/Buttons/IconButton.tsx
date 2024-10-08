@@ -24,7 +24,7 @@ export const _IconButtonStyled = styled.button<IconButtonProps>`
 
 export const IconButton = (props: IconButtonProps) => {
   return (
-    <_IconButtonStyled {...props}>
+    <_IconButtonStyled {...props} outlined={props.outlined ? 1 : 0}>
       {props.children}
     </_IconButtonStyled>
   );
