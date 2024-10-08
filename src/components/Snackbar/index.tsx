@@ -25,7 +25,7 @@ const Snackbar: React.FC<Props> = ({ message, type, isVisible }) => {
       aria-atomic='true'
       aria-hidden={!message}
     >
-      <Icon  size={24}/>
+      <Icon data-testid={`snackbar-icon-${type}`} size={24}/>
       {message}
     </Styled.Snackbar>
   );
