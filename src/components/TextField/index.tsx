@@ -14,7 +14,7 @@ export const Input = styled.input`
   font-size: 16px;
   line-height: 18px;
   font-weight: normal;
-  border-radius:8px;
+  border-radius: 8px;
   :focus {
     outline: none;
     border: 1px solid #007c89;
@@ -27,11 +27,17 @@ type Props = {
 } & InputHTMLAttributes<any>;
 
 const TextField = (props: Props) => {
+  const testId = `text-field${props.name ? `-${props.name}` : ""}`;
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
-      <Input {...props} />
-      <span style={{fontSize: 12, color: 'red'}}>{props.error}</span>
+      <label data-testid={`label-${testId}`} htmlFor={props.id}>{props.label}</label>
+      <Input data-testid={testId} {...props} />
+      <span
+        data-testid={`error-${testId}`}
+        style={{ fontSize: 12, color: "red" }}
+      >
+        {props.error}
+      </span>
     </div>
   );
 };
