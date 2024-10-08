@@ -17,6 +17,7 @@ const Snackbar: React.FC<Props> = ({ message, type, isVisible }) => {
 
   return (
     <Styled.Snackbar
+      data-testid="snackbar"
       className={`${isVisible ? 'show' : ''}`}
       type={type}
       role='alert'
