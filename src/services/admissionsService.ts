@@ -1,4 +1,5 @@
 import AdmissionStatus from '~/constants/admissionStatus';
+import { VITE_API_ADMISSIONS_BASE_URL } from '~/constants/env';
 import { Admission } from '~/types/admission';
 import { IAPIDefinnitions } from "~/types/api";
 
@@ -32,7 +33,7 @@ class AdmissionsService {
   }
 
   async listAdmissions({ filters }: ListAdmissionsParams = {}): Promise<Admission[]> {
-    let url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations`;
+    let url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations`;
 
     if (filters?.cpf) {
       url = `${url}?cpf=${filters.cpf}`; 
@@ -45,7 +46,7 @@ class AdmissionsService {
   }
 
   async create({ name, email, cpf, admissionDate }: CreateAdmissionParams): Promise<boolean> {
-    const url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations`;
+    const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations`;
 
     const response = await this.api.post(url, {
       body: JSON.stringify({
@@ -61,7 +62,7 @@ class AdmissionsService {
   }
 
   async updateAdmissionStatus({ id, status }: UpdateAdmissionStatusParams): Promise<boolean> {
-    let url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
+    let url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.patch(
       url,
       {
@@ -75,7 +76,7 @@ class AdmissionsService {
   }
 
   async delete({ id }: deleteAdmissionParams): Promise<boolean> {
-    const url = `${import.meta.env.VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
+    const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.delete(url);
 
     return response.status === 200;
