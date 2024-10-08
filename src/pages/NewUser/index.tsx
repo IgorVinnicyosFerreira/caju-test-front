@@ -202,7 +202,7 @@ const NewUserPage = () => {
             error={validationErrors?.admissionDate}
             disabled={isLoading}
           />
-          <Button type='submit' disabled={isLoading}>
+          <Button data-testid="submit-form" type='submit' disabled={isLoading}>
             {isLoading ? <SpinnerLoader /> : 'Cadastrar'}
           </Button>
         </form>
