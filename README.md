@@ -118,6 +118,11 @@ Inicie o servidor do Json Web Server para consumir a API
 yarn init:db
 ```
 
+Faça uma cópia do .env.example para o arquivo .env
+```shell
+cp .env.example .env
+```
+
 Execute a aplicação
 
 ```shell
@@ -137,6 +142,8 @@ Caso necessite executar a suíte de testes use o comando abaixo:
 yarn test:dev
 ```
 
+OBS:
+Deixei uma pipeline de testes no github actions
 
 Para concluir o desenvolvimento faça as edições necessárias e depois envie a URL do novo repositório com suas alterações para o RH.
 
