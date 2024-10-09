@@ -32,6 +32,8 @@ const DashboardPage = () => {
     if (isError) {
       showSnackbar('Falha ao tentar carregar as admissões, tente novamente!', SnackbarTypes.ERROR);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError])
 
   const handleOnCPFSearch = (cpf: string) => {
