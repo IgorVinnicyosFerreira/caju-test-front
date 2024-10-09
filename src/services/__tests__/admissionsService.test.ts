@@ -77,7 +77,7 @@ describe('AdmissionsService', () => {
         admissionDate: '2024-10-07',
       };
 
-      mockApi.post = jest.fn(() => Promise.resolve({ status: 200 } as Response));
+      mockApi.post = jest.fn(() => Promise.resolve({ status: 201 } as Response));
 
       const result = await admissionsService.create(employeeData);
 
@@ -93,7 +93,7 @@ describe('AdmissionsService', () => {
       expect(result).toBe(true);
     });
 
-    it('should return error if response status is not 200', async () => {
+    it('should return error if response status is not 201', async () => {
       const employeeData = {
         name: 'Igor Ferreira',
         email: 'igor_ferreira@teste.com',
