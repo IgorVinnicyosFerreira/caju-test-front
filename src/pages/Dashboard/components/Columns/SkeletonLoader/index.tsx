@@ -5,6 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Loader = () => {
   return (
     <Skeleton
+      data-testid="skeleton-loader-column"
       wrapper={Styled.Wrapper}
       borderRadius={8}
       count={3}
