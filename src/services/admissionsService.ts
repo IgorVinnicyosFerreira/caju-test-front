@@ -58,6 +58,10 @@ class AdmissionsService {
       })
     });
 
+    if (response.status !== 200) {
+      throw new Error('Failed to create admission');
+    }
+
     return response.status === 200;
   }
 
@@ -72,12 +76,20 @@ class AdmissionsService {
       }
     );
 
+    if (response.status !== 200) {
+      throw new Error('Failed to update status');
+    }
+
     return response.status === 200;
   }
 
   async delete({ id }: DeleteAdmissionParams): Promise<boolean> {
     const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.delete(url);
+
+    if (response.status !== 200) {
+      throw new Error('Failed to delete admission');
+    }
 
     return response.status === 200;
   }
