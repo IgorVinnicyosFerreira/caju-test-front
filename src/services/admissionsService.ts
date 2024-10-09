@@ -3,18 +3,18 @@ import { VITE_API_ADMISSIONS_BASE_URL } from '~/constants/env';
 import { Admission } from '~/types/admission';
 import { IAPIDefinnitions } from "~/types/api";
 
-type ListAdmissionsParams = {
+type ListParams = {
   filters?: {
     cpf?: string;
   };
 };
 
-type UpdateAdmissionStatusParams = {
+type UpdateStatusParams = {
   status: AdmissionStatus;
   id: string;
 }
 
-type deleteAdmissionParams = {
+type DeleteAdmissionParams = {
   id: string;
 }
 
@@ -32,7 +32,7 @@ class AdmissionsService {
     this.api = api;
   }
 
-  async listAdmissions({ filters }: ListAdmissionsParams = {}): Promise<Admission[]> {
+  async list({ filters }: ListParams = {}): Promise<Admission[]> {
     let url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations`;
 
     if (filters?.cpf) {
@@ -61,7 +61,7 @@ class AdmissionsService {
     return response.status === 200;
   }
 
-  async updateAdmissionStatus({ id, status }: UpdateAdmissionStatusParams): Promise<boolean> {
+  async updateStatus({ id, status }: UpdateStatusParams): Promise<boolean> {
     const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.patch(
       url,
@@ -75,7 +75,7 @@ class AdmissionsService {
     return response.status === 200;
   }
 
-  async delete({ id }: deleteAdmissionParams): Promise<boolean> {
+  async delete({ id }: DeleteAdmissionParams): Promise<boolean> {
     const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.delete(url);
 

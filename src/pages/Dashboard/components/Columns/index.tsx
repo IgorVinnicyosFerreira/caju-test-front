@@ -130,7 +130,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
   const handleOnChangeAdmissionStatus = async (id: string, status: AdmissionStatus) => {
     try {
       setConfirmationDialogConfig((prev) => ({ ...prev, isLoading: true }));
-      await admissionsService.updateAdmissionStatus({ id, status });
+      await admissionsService.updateStatus({ id, status });
       await queryClient.invalidateQueries({
         queryKey: [ADMISSIONS_CACHE_KEY]
       });

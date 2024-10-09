@@ -15,4 +15,8 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  retries: {
+    runMode: 2,
+    openMode: 2,
+  }
 });

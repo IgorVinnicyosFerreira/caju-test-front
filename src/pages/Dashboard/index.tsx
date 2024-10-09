@@ -18,7 +18,7 @@ const DashboardPage = () => {
   const {data: admissions, isLoading, refetch, isError } = useQuery({
     queryKey: [ADMISSIONS_CACHE_KEY, cpf],
     queryFn: async () => {
-      const admissions = await admissionsService.listAdmissions({
+      const admissions = await admissionsService.list({
         filters: {
           cpf
         }
