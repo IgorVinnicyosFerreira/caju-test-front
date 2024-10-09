@@ -56,9 +56,9 @@ export const SearchBar: React.FC<Props> = ({ onCPFSearch, onRefreshClick }) => {
   
   return (
     <Styled.Container>
-      <TextField value={cpfInput} maxLength={14}  placeholder="Digite um CPF válido" onChange={handleOnChangeCPF} error={cpfErrorMessage}/>
+      <TextField name="cpf" value={cpfInput} maxLength={14}  placeholder="Digite um CPF válido" onChange={handleOnChangeCPF} error={cpfErrorMessage}/>
       <Styled.Actions>
-        <IconButton aria-label="refetch" outlined onClick={handleRefresh}>
+        <IconButton data-testid="refetch-button" aria-label="refetch" outlined onClick={handleRefresh}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
