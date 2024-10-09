@@ -1,0 +1,42 @@
+name: CI for Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      json-server:
+        image: typicode/json-server
+        ports:
+          - 3000:3000
+        env:
+          JSON_SERVER_PORT: 3000
+          JSON_SERVER_DB: db.json
+        options: >-
+          --volume ${{ github.workspace }}/db.json:/data/db.json
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Unit Tests
+        run: npm test
+
+      - name: Install Cypress
+        run: npm install cypress
+
+      - name: Run E2E Tests
+        run: npm run cy:run  # ou o comando que você usa para rodar os testes E2E
