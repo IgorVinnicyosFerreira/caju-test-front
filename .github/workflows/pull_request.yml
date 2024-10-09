@@ -6,19 +6,8 @@ on:
       - main
       - develop
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
-
-    services:
-      json-server:
-        image: typicode/json-server
-        ports:
-          - 3000:3000
-        env:
-          JSON_SERVER_PORT: 3000
-          JSON_SERVER_DB: db.json
-        options: >-
-          --volume ${{ github.workspace }}/db.json:/data/db.json
 
     steps:
       - name: Checkout code
@@ -30,13 +19,20 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run Unit Tests
-        run: npm test
-
-      - name: Install Cypress
-        run: npm install cypress
+        run: yarn test
 
       - name: Run E2E Tests
-        run: npm run cy:run  # ou o comando que você usa para rodar os testes E2E
+        uses: cypress-io/github-action@v3
+        with:
+          project: ./site
+          browser: chrome
+          build: yarn build
+          start: |
+            yarn init:db
+            yarn preview
+          wait-on: "http://localhost:3001"
+        env: 
+          VITE_API_ADMISSIONS_BASE_URL: ${{secrets.VITE_API_ADMISSIONS_BASE_URL}}
