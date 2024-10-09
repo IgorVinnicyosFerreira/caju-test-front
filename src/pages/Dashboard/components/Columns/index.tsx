@@ -159,7 +159,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       />
       {allColumns.map((collum) => {
         return (
-          <Styled.Column status={collum.status} key={collum.title}>
+          <Styled.Column data-testid="admission-column" status={collum.status} key={collum.title}>
             <>
               <Styled.TitleColumn status={collum.status}>
                 {collum.title}

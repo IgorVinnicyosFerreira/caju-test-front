@@ -13,13 +13,13 @@ const ConfirmationDialog: React.FC<ConfirmationDialogConfig> = ({
 }) => {
   return (
     <Dialog isOpen={isOpen}>
-      <Styled.Content>
+      <Styled.Content data-testid="confirmation-dialog">
         <Styled.Title id='dialog-title'>{title}</Styled.Title>
         <Styled.Description id='dialog-description'>
           {description}
         </Styled.Description>
         <Styled.DeclineButton onClick={onClose} disabled={isLoading}>Cancelar</Styled.DeclineButton>
-        <Styled.ConfirmationButton onClick={onAccept} disabled={isLoading}>
+        <Styled.ConfirmationButton data-testid="accept-dialog" onClick={onAccept} disabled={isLoading}>
           {isLoading ? <SpinnerLoader /> : "Confirmar"}
         </Styled.ConfirmationButton>
       </Styled.Content>
