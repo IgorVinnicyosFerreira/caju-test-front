@@ -31,7 +31,7 @@ const filterAdmissionByStatus = (list: Admission[], status: AdmissionStatus) => 
 }
 
 const formatAdmission = (admission: Admission): Admission => {
-  const admissionDate = new Date(`${admission.admissionDate}T00:00:00`);
+  const admissionDate = new Date(`${admission.admissionDate}T03:00:00`);
   const formattedDate = admissionDate.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo'});
 
   return ({
