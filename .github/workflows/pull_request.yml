@@ -6,8 +6,8 @@ on:
       - main
       - develop
 jobs:
-  Automated_Tests:
-    name: Automated Tests
+  automated_checks:
+    name: Automated Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+
+      - name: Run Lint
+        run: yarn lint
 
       - name: Run Unit Tests
         run: yarn test
