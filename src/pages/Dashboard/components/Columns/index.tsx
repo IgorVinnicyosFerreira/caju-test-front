@@ -36,6 +36,7 @@ const formatAdmission = (admission: Admission): Admission => {
 
   return ({
     ...admission,
+    cpf: maskCPF(admission.cpf),
     admissionDate: formattedDate
   })
 }
@@ -84,7 +85,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       title: "Reprovar admissão",
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
-      }, CPF ${maskCPF(admission.cpf)}, será reprovada.`,
+      }, CPF ${admission.cpf}, será reprovada.`,
       onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.REPROVED),
     });
   };
@@ -95,7 +96,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       title: "Aprovar admissão",
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
-      }, CPF ${maskCPF(admission.cpf)}, será aprovada.`,
+      }, CPF ${admission.cpf}, será aprovada.`,
       onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.APPROVED),
     });
   };
@@ -106,7 +107,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       title: "Excluir admissão",
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
-      }, CPF ${maskCPF(admission.cpf)}, será excluída.`,
+      }, CPF ${admission.cpf}, será excluída.`,
       onAccept: () => handleDeleteAdimissionStatus(admission.id),
     });
   };
@@ -117,7 +118,7 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
       title: "Revisar admissão",
       description: `Ao confirmar a adimissão do funcionário ${
         admission.employeeName
-      }, CPF ${maskCPF(admission.cpf)}, será movida para revisão.`,
+      }, CPF ${admission.cpf}, será movida para revisão.`,
       onAccept: () => handleOnChangeAdmissionStatus(admission.id, AdmissionStatus.REVIEW),
     });
   };
