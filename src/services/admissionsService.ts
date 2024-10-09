@@ -58,11 +58,11 @@ class AdmissionsService {
       })
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error('Failed to create admission');
     }
 
-    return response.status === 200;
+    return response.status === 201;
   }
 
   async updateStatus({ id, status }: UpdateStatusParams): Promise<boolean> {

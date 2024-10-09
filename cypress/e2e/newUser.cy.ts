@@ -23,7 +23,7 @@ describe('New User page', () => {
       };
   
       cy.intercept('POST', `http://localhost:3000/registrations`, {
-        statusCode: 200,
+        statusCode: 201,
       }).as('createUser');
   
       cy.intercept('GET', 'http://localhost:3000/registrations', {
