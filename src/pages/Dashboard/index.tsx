@@ -7,6 +7,7 @@ import AdmissionsServiceFactory from '~/factories/services/admissionsServiceFact
 import { ADMISSIONS_CACHE_KEY } from '~/constants/cacheKeys';
 import { useSnackbar } from '~/contexts/snackbarContext';
 import SnackbarTypes from '~/constants/snackbarTypes';
+import { Admission } from '~/types/admission';
 
 const DashboardPage = () => {
   const [cpf, setCpf] = useState<string>();
@@ -44,7 +45,7 @@ const DashboardPage = () => {
   return (
     <Styled.Container>
       <SearchBar onCPFSearch={handleOnCPFSearch} onRefreshClick={handleRefresh} />
-      <Collumns registrations={admissions} isLoading={isLoading} />
+      <Collumns registrations={admissions as Admission[]} isLoading={isLoading} />
     </Styled.Container>
   );
 };
