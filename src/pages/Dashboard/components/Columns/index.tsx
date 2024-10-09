@@ -20,9 +20,25 @@ const allColumns = [
 ];
 
 type Props = {
-  registrations?: Admission[];
+  registrations: Admission[] | [];
   isLoading?: boolean;
 };
+
+const filterAdmissionByStatus = (list: Admission[], status: AdmissionStatus) => {
+  return list?.filter(
+    (admission) => admission.status === status
+  ).map(data => formatAdmission(data))
+}
+
+const formatAdmission = (admission: Admission): Admission => {
+  const admissionDate = new Date(admission.admissionDate);
+  const formattedDate = admissionDate.toLocaleDateString('pt-BR');
+
+  return ({
+    ...admission,
+    admissionDate: formattedDate
+  })
+}
 
 const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
   const [confirmationDialogConfig, setConfirmationDialogConfig] =
@@ -38,26 +54,17 @@ const Collumns: React.FC<Props> = ({ registrations, isLoading }) => {
   const { showSnackbar } = useSnackbar();
 
   const approvedAdmissions = useMemo(
-    () =>
-      registrations?.filter(
-        (admission) => admission.status === AdmissionStatus.APPROVED
-      ),
+    () => filterAdmissionByStatus(registrations, AdmissionStatus.APPROVED),
     [registrations]
   );
 
   const reprovedAdmissions = useMemo(
-    () =>
-      registrations?.filter(
-        (admission) => admission.status === AdmissionStatus.REPROVED
-      ),
+    () => filterAdmissionByStatus(registrations, AdmissionStatus.REPROVED),
     [registrations]
   );
 
   const reviewAdmissions = useMemo(
-    () =>
-      registrations?.filter(
-        (admission) => admission.status === AdmissionStatus.REVIEW
-      ),
+    () => filterAdmissionByStatus(registrations, AdmissionStatus.REVIEW),
     [registrations]
   );
 
