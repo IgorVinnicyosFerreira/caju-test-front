@@ -18,9 +18,9 @@ const ConfirmationDialog: React.FC<ConfirmationDialogConfig> = ({
         <Styled.Description id='dialog-description'>
           {description}
         </Styled.Description>
-        <Styled.DeclineButton onClick={onClose} disabled={isLoading}>Cancelar</Styled.DeclineButton>
+        <Styled.DeclineButton data-testid="close-dialog" onClick={onClose} disabled={isLoading}>Cancelar</Styled.DeclineButton>
         <Styled.ConfirmationButton data-testid="accept-dialog" onClick={onAccept} disabled={isLoading}>
-          {isLoading ? <SpinnerLoader /> : "Confirmar"}
+          {isLoading ? <SpinnerLoader data-testid="spinner" /> : "Confirmar"}
         </Styled.ConfirmationButton>
       </Styled.Content>
     </Dialog>
