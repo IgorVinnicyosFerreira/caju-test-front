@@ -46,7 +46,7 @@ describe('AdmissionsService', () => {
         json: () => Promise.resolve(MOCK_ADMISSIONS),
       } as Response));
 
-      const result = await admissionsService.listAdmissions();
+      const result = await admissionsService.list();
 
       expect(mockApi.get).toHaveBeenCalledWith(url);
       expect(result).toEqual(MOCK_ADMISSIONS);
@@ -60,7 +60,7 @@ describe('AdmissionsService', () => {
         json: () => Promise.resolve(MOCK_ADMISSIONS.filter(item => item.cpf === filters.cpf)),
       } as Response));
 
-      const result = await admissionsService.listAdmissions({ filters });
+      const result = await admissionsService.list({ filters });
 
       expect(mockApi.get).toHaveBeenCalledWith(url);
       expect(result).toEqual([MOCK_ADMISSIONS[0]]);
@@ -116,7 +116,7 @@ describe('AdmissionsService', () => {
 
       mockApi.patch = jest.fn(() => Promise.resolve({ status: 200 } as Response));
 
-      const result = await admissionsService.updateAdmissionStatus({ id, status });
+      const result = await admissionsService.updateStatus({ id, status });
 
       expect(mockApi.patch).toHaveBeenCalledWith(
         `${MOCK_BASE_URL}/registrations/${id}`,
@@ -133,7 +133,7 @@ describe('AdmissionsService', () => {
 
       mockApi.patch = jest.fn(() => Promise.resolve({ status: 400 } as Response));
 
-      const result = await admissionsService.updateAdmissionStatus({ id, status });
+      const result = await admissionsService.updateStatus({ id, status });
 
       expect(result).toBe(false);
     });
