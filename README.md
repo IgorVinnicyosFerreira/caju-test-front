@@ -147,3 +147,4 @@ Deixei uma pipeline de testes no github actions
 
 Para concluir o desenvolvimento faça as edições necessárias e depois envie a URL do novo repositório com suas alterações para o RH.
 
+##Alteração para demonstrar funcionamento do pipeline de testes na pull request
