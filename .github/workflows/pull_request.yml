@@ -27,7 +27,7 @@ jobs:
       - name: Run E2E Tests
         uses: cypress-io/github-action@v3
         with:
-          project: ./site
+          project: ./
           browser: chrome
           build: yarn build
           start: |
