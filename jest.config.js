@@ -9,6 +9,7 @@ export default {
   },
   moduleNameMapper: {
     "^~/(.+)": "<rootDir>/src/$1",
+    '\\.(css|less)$': '<rootDir>/jestStyleMocks.ts',
   },
   setupFilesAfterEnv: ["<rootDir>/setupJest.ts"],
 };
