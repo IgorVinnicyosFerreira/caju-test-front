@@ -1,6 +1,28 @@
 describe('Dashboard page', () => {
+  const mockList = [
+    {
+      id: "3",
+      admissionDate: "2023-10-22",
+      email: "jose@caju.com.br",
+      employeeName: "José Leão",
+      status: "REPROVED",
+      cpf: "78502270001",
+    },
+    {
+      id: "94ca",
+      employeeName: "Igor Ferreira",
+      email: "dev.igor.ferreira@gmail.com",
+      cpf: "89042255072",
+      admissionDate: "2024-10-17",
+      status: "APPROVED",
+    },
+  ];
+
   beforeEach(() => {
-    cy.intercept('GET', 'http://localhost:3000/registrations').as('getData');
+    cy.intercept('GET', 'http://localhost:3000/registrations', {
+      statusCode: 200,
+      body: mockList,
+    }).as('getData');
     cy.visit('http://localhost:3001/#/dashboard');
   });
 
