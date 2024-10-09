@@ -1,37 +1,12 @@
 describe('Dashboard page', () => {
-  const mockList = [
-    {
-      id: "3",
-      admissionDate: "2023-10-22",
-      email: "jose@caju.com.br",
-      employeeName: "José Leão",
-      status: "REPROVED",
-      cpf: "78502270001",
-    },
-    {
-      id: "94ca",
-      employeeName: "Igor Ferreira",
-      email: "dev.igor.ferreira@gmail.com",
-      cpf: "89042255072",
-      admissionDate: "2024-10-17",
-      status: "APPROVED",
-    },
-  ];
-
   beforeEach(() => {
-    cy.intercept('GET', 'http://localhost:3000/registrations', {
-      statusCode: 200,
-      body: mockList,
-    }).as('getData');
+    cy.intercept('GET', 'http://localhost:3000/registrations').as('getData');
     cy.visit('http://localhost:3001/#/dashboard');
   });
 
   describe('List admissions', () => {
-    beforeEach(() => {
-      cy.wait('@getData');
-    });
-
     it('should list admissions separated by status', () => {
+      cy.wait('@getData');
       const reviewCol = cy.get('[data-testid="admission-column"][status="REVIEW"]');
       reviewCol.should('be.visible');
       reviewCol.should('contain', 'Pronto para revisar');
@@ -48,12 +23,27 @@ describe('Dashboard page', () => {
     });
 
     it('should list admissions by valid CPF', () => {
-      cy.get('[data-testid="text-field-cpf"]').type('89042255072');
+      const mockData = {
+        "id": "94ca",
+        "employeeName": "Igor Ferreira",
+        "email": "dev.igor.ferreira@gmail.com",
+        "cpf": "89042255072",
+        "admissionDate": "2024-10-19",
+        "status": "REVIEW"
+      };
+      
+      cy.intercept('GET', `http://localhost:3000/registrations?cpf=${mockData.cpf}`, {
+        statusCode: 200,
+        body: [mockData],
+      }).as('getData');
+      cy.wait('@getData');
+
+      cy.get('[data-testid="text-field-cpf"]').type(mockData.cpf);
       cy.get('[data-testid="registration-card"]').should('be.visible');
 
       cy.get('[data-testid="registration-card"]').contains('Igor Ferreira');
       cy.get('[data-testid="registration-card"]').contains('dev.igor.ferreira@gmail.com');
-      cy.get('[data-testid="registration-card"]').contains('17/10/2024');
+      cy.get('[data-testid="registration-card"]').contains('19/10/2024');
     });
 
     it('should show error message when typing invalid CPF', () => {
