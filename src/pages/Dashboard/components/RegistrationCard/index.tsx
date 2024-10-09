@@ -32,7 +32,7 @@ const RegistrationCard: React.FC<Props> = ({
   const formattedDate = admissionDate.toLocaleDateString('pt-BR');
 
   return (
-    <Styled.Card>
+    <Styled.Card data-testid="registration-card" name={data.employeeName} >
       <Styled.IconAndText>
         <HiOutlineUser />
         <h3>{data.employeeName}</h3>
@@ -49,12 +49,14 @@ const RegistrationCard: React.FC<Props> = ({
         {isInReview ? (
           <>
             <ButtonSmall
+              data-testid="reprove-button"
               bgcolor='rgb(255, 145, 154)'
               onClick={() => onReproveClick && onReproveClick(data)}
             >
               Reprovar
             </ButtonSmall>
             <ButtonSmall
+              data-testid="approve-button"
               bgcolor='rgb(155, 229, 155)'
               onClick={() => onApproveClick && onApproveClick(data)}
             >
@@ -63,13 +65,14 @@ const RegistrationCard: React.FC<Props> = ({
           </>
         ) : (
           <ButtonSmall
+            data-testid="review-button"
             bgcolor='#ff8858'
             onClick={() => onReviewClick && onReviewClick(data)}
           >
             Revisar novamente
           </ButtonSmall>
         )}
-        <IconButton color={'#000000'} onClick={() => onDeleteClick && onDeleteClick(data)}>
+        <IconButton data-testid="delete-button" color={'#000000'} onClick={() => onDeleteClick && onDeleteClick(data)}>
           <HiOutlineTrash />
         </IconButton>
       </Styled.Actions>

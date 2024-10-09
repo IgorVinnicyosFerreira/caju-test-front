@@ -1,6 +1,6 @@
 export type RequestConfig = {
   body?: string;
-  headers?: Headers;
+  headers?: Record<string, string>;
 }
 
 export interface IAPIDefinnitions {
