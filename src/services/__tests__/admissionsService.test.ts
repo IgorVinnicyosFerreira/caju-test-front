@@ -46,7 +46,7 @@ describe('AdmissionsService', () => {
         json: () => Promise.resolve(MOCK_ADMISSIONS),
       } as Response));
 
-      const result = await admissionsService.listAdmissions();
+      const result = await admissionsService.list();
 
       expect(mockApi.get).toHaveBeenCalledWith(url);
       expect(result).toEqual(MOCK_ADMISSIONS);
@@ -60,7 +60,7 @@ describe('AdmissionsService', () => {
         json: () => Promise.resolve(MOCK_ADMISSIONS.filter(item => item.cpf === filters.cpf)),
       } as Response));
 
-      const result = await admissionsService.listAdmissions({ filters });
+      const result = await admissionsService.list({ filters });
 
       expect(mockApi.get).toHaveBeenCalledWith(url);
       expect(result).toEqual([MOCK_ADMISSIONS[0]]);
@@ -93,7 +93,7 @@ describe('AdmissionsService', () => {
       expect(result).toBe(true);
     });
 
-    it('should return false if response status is not 200', async () => {
+    it('should return error if response status is not 200', async () => {
       const employeeData = {
         name: 'Igor Ferreira',
         email: 'igor_ferreira@teste.com',
@@ -103,9 +103,11 @@ describe('AdmissionsService', () => {
 
       mockApi.post = jest.fn(() => Promise.resolve({ status: 400 } as Response));
 
-      const result = await admissionsService.create(employeeData);
-
-      expect(result).toBe(false);
+      try {
+         await admissionsService.create(employeeData);
+      } catch (error) {
+        expect((error as Error).message).toBe('Failed to create admission');
+      }   
     });
   });
 
@@ -116,7 +118,7 @@ describe('AdmissionsService', () => {
 
       mockApi.patch = jest.fn(() => Promise.resolve({ status: 200 } as Response));
 
-      const result = await admissionsService.updateAdmissionStatus({ id, status });
+      const result = await admissionsService.updateStatus({ id, status });
 
       expect(mockApi.patch).toHaveBeenCalledWith(
         `${MOCK_BASE_URL}/registrations/${id}`,
@@ -127,15 +129,17 @@ describe('AdmissionsService', () => {
       expect(result).toBe(true);
     });
 
-    it('should return false if response status is not 200', async () => {
+    it('should return error if response status is not 200', async () => {
       const id = 'admissionId';
       const status = AdmissionStatus.REPROVED;
 
       mockApi.patch = jest.fn(() => Promise.resolve({ status: 400 } as Response));
 
-      const result = await admissionsService.updateAdmissionStatus({ id, status });
-
-      expect(result).toBe(false);
+      try {
+        await admissionsService.updateStatus({ id, status });
+      } catch (error) {
+        expect((error as Error).message).toBe('Failed to update status');
+      } 
     });
   });
 
@@ -151,14 +155,16 @@ describe('AdmissionsService', () => {
       expect(result).toBe(true);
     });
 
-    it('should return false if response status is not 200', async () => {
+    it('should return error if response status is not 200', async () => {
       const id = 'admissionId';
 
       mockApi.delete = jest.fn(() => Promise.resolve({ status: 400 } as Response));
 
-      const result = await admissionsService.delete({ id });
-
-      expect(result).toBe(false);
+      try {
+        await admissionsService.delete({ id });
+      } catch (error) {
+        expect((error as Error).message).toBe('Failed to delete admission');
+      } 
     });
   });
 });

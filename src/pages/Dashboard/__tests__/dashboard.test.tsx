@@ -48,7 +48,7 @@ describe('DashboardPage Integration', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     AdmissionsServiceFactory.make = jest.fn().mockReturnValue({
-      listAdmissions: jest.fn().mockResolvedValue(MOCK_ADMISSIONS),
+      list: jest.fn().mockResolvedValue(MOCK_ADMISSIONS),
     });
   });
 
@@ -72,7 +72,7 @@ describe('DashboardPage Integration', () => {
 
   it("should show error snackbar on admissions fetch failure", async () => {
     AdmissionsServiceFactory.make = jest.fn().mockReturnValue({
-      listAdmissions: jest.fn().mockRejectedValue(new Error('Failed to fetch admissions')),
+      list: jest.fn().mockRejectedValue(new Error('Failed to fetch admissions')),
     });
 
     render(
@@ -113,7 +113,7 @@ describe('DashboardPage Integration', () => {
     });
   });
 
-  it("should call listAdmissions function when entering an valid CPF", async () => {
+  it("should call list function when entering an valid CPF", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <SnackbarProvider>
@@ -126,7 +126,7 @@ describe('DashboardPage Integration', () => {
 
     const mockListFn = jest.fn().mockResolvedValue([]);
     AdmissionsServiceFactory.make = jest.fn().mockReturnValue({
-      listAdmissions: mockListFn,
+      list: mockListFn,
     });
 
     const cpfInput = screen.getByTestId('text-field-cpf');

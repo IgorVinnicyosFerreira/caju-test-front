@@ -5,6 +5,7 @@ import {
   HiOutlineUser,
   HiOutlineCalendar,
   HiOutlineTrash,
+  HiOutlineDocument 
 } from "react-icons/hi";
 import { Admission } from "~/types/admission";
 import AdmissionStatus from "~/constants/admissionStatus";
@@ -38,6 +39,10 @@ const RegistrationCard: React.FC<Props> = ({
       <Styled.IconAndText>
         <HiOutlineMail />
         <p>{data.email}</p>
+      </Styled.IconAndText>
+      <Styled.IconAndText>
+        <HiOutlineDocument  />
+        <span>{data.cpf}</span>
       </Styled.IconAndText>
       <Styled.IconAndText>
         <HiOutlineCalendar />
