@@ -6,7 +6,8 @@ on:
       - main
       - develop
 jobs:
-  tests:
+  Automated_Tests:
+    name: Automated Tests
     runs-on: ubuntu-latest
 
     steps:

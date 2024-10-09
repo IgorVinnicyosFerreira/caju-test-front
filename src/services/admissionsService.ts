@@ -62,7 +62,7 @@ class AdmissionsService {
   }
 
   async updateAdmissionStatus({ id, status }: UpdateAdmissionStatusParams): Promise<boolean> {
-    let url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
+    const url = `${VITE_API_ADMISSIONS_BASE_URL}/registrations/${id}`;
     const response = await this.api.patch(
       url,
       {
