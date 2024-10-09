@@ -1,0 +1,42 @@
+name: CI for Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  automated_checks:
+    name: Automated Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run Lint
+        run: yarn lint
+
+      - name: Run Unit Tests
+        run: yarn test
+
+      - name: Run E2E Tests
+        uses: cypress-io/github-action@v3
+        with:
+          project: ./
+          browser: chrome
+          build: yarn build
+          start: |
+            yarn init:db
+            yarn preview
+          wait-on: "http://localhost:3001"
+        env: 
+          VITE_API_ADMISSIONS_BASE_URL: ${{secrets.VITE_API_ADMISSIONS_BASE_URL}}

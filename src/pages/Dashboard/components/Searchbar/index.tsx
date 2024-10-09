@@ -33,6 +33,8 @@ export const SearchBar: React.FC<Props> = ({ onCPFSearch, onRefreshClick }) => {
     const unmaskedCpf = onlyNumbers(cpfInput);
 
     onCPFSearch && onCPFSearch(unmaskedCpf);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cpfInput])
 
   const goToNewAdmissionPage = () => {
