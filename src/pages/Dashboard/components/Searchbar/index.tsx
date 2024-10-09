@@ -61,7 +61,7 @@ export const SearchBar: React.FC<Props> = ({ onCPFSearch, onRefreshClick }) => {
         <IconButton data-testid="refetch-button" aria-label="refetch" outlined onClick={handleRefresh}>
           <HiRefresh />
         </IconButton>
-        <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
+        <Button data-testid="go-to-new-user" onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
       </Styled.Actions>
     </Styled.Container>
   );

@@ -160,7 +160,7 @@ const NewUserPage = () => {
   return (
     <Styled.Container>
       <Styled.Card>
-        <IconButton onClick={() => goToHome()} outlined aria-label='back'>
+        <IconButton data-testid="go-to-dash" onClick={() => goToHome()} outlined aria-label='back'>
           <HiOutlineArrowLeft size={24} />
         </IconButton>
         <form onSubmit={(event) => handleSubmit(event, onSubmit)}>
